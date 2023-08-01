@@ -143,6 +143,9 @@ class TestDBStorage(unittest.TestCase):
         get_value = models.storage.get(User, new_state2.id)
         self.assertIsNone(get_value)
 
+        get_value = models.storage.get(State, "random_id")
+        self.assertIsNone(get_value)
+
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_count(self):
         """Test that count returns number of class object"""
