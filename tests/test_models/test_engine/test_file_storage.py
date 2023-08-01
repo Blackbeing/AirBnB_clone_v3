@@ -144,21 +144,24 @@ class TestFileStorage(unittest.TestCase):
     def test_get(self):
         """Test that get gets object based on object class and id"""
         FileStorage._FileStorage__objects = {}
-        save = FileStorage._FileStorage__objects
         storage = FileStorage()
-        test_dict = {}
         objects = [User(), User(), User()]
         for value in objects:
-            with self.subTest(value=value):
-                instance_key = value.__class__.__name__ + "." + value.id
-                storage.new(value)
-                test_dict[instance_key] = value
-                self.assertEqual(test_dict, storage._FileStorage__objects)
-        FileStorage._FileStorage__objects = save
+            storage.new(value)
 
         t = storage.get(User, objects[-1].id)
         self.assertEqual(t, objects[-1])
 
+        t = storage.get(User, "doesn't exist")
+        self.assertIsNone(t)
+
     @unittest.skipIf(models.storage_t == "db", "not testing file storage")
     def test_count(self):
         """Test that get gets object based on object class and id"""
+        FileStorage._FileStorage__objects = {}
+        storage = FileStorage()
+        objects = [User(), User(), User()]
+        for value in objects:
+            storage.new(value)
+        self.assertEqual(storage.count(User), 3)
+        self.assertIsInstance(storage.count(User), int)
