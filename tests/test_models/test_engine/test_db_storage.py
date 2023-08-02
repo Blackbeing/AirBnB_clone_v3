@@ -136,7 +136,7 @@ class TestDBStorage(unittest.TestCase):
         new_state1 = State(name="State1")
         new_state2 = State(name="State2")
         [models.storage.new(s) for s in [new_state1, new_state2]]
-        models.storage.save()
+        # models.storage.save()
         get_value = models.storage.get(State, new_state2.id)
         self.assertIs(new_state2, get_value)
         # Test get using id with wroing class
@@ -149,4 +149,20 @@ class TestDBStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t != "db", "not testing db storage")
     def test_count(self):
         """Test that count returns number of class object"""
-        self.assertIsInstance(models.storage.count(User), int)
+        self.assertIsInstance(models.storage.count(), int)
+        state_counter = models.storage.count(State)
+        user_counter = models.storage.count(User)
+
+        new_state1 = State(name="State01")
+        new_state2 = State(name="State02")
+        models.storage.new(new_state1)
+        models.storage.new(new_state2)
+
+        self.assertEqual(models.storage.count(State), state_counter + 2)
+
+        new_user1 = User(email="email1", password="pwd")
+        new_user2 = User(email="email2", password="pwd")
+        models.storage.new(new_user1)
+        models.storage.new(new_user2)
+
+        self.assertEqual(models.storage.count(User), user_counter + 2)
