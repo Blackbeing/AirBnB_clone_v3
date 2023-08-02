@@ -10,14 +10,14 @@ from flask import jsonify
 @app_views.route("/status")
 def status():
     """Return a json object of dummy status code"""
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK"}), 200
 
 
 @app_views.route("/stats")
 def stats():
     statDict = {}
     from models import storage_t, storage
-    if storage_t == 'db':
+    if storage_t == "db":
         from models.engine.db_storage import classes
     else:
         from models.engine.file_storage import classes
