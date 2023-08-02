@@ -13,13 +13,13 @@ def status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", methods=["GET"])
+@app_views.route("/stats")
 def stats():
     statDict = {}
     from models import storage_t, storage
     if storage_t == 'db':
         from models.engine.db_storage import classes
-    else :
+    else:
         from models.engine.file_storage import classes
 
     for cls in classes.keys():
