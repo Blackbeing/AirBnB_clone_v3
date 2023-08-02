@@ -14,13 +14,13 @@ from models.user import User
 from models import storage
 
 
-@app_views.route("/status", methods=["GET"])
+@app_views.route("/status", strict_slashes=False, methods=["GET"])
 def status():
     """Return a json object of dummy status code"""
-    return jsonify({"status": "OK"})
+    return jsonify({"status": "OK"}), 200
 
 
-@app_views.route("/stats", methods=["GET"])
+@app_views.route("/stats", strict_slashes=False, methods=["GET"])
 def stats():
     classes = {
         "Amenity": Amenity,
@@ -30,4 +30,7 @@ def stats():
         "State": State,
         "User": User,
     }
-    return jsonify({k.lower(): storage.count(v) for k, v in classes.items()})
+    return (
+        jsonify({k.lower(): storage.count(v) for k, v in classes.items()}),
+        200,
+    )
