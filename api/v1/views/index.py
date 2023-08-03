@@ -14,8 +14,9 @@ def status():
     return jsonify({"status": "OK"}), 200
 
 
-@app_views.route("/stats")
+@app_views.route("/stats", strict_slashes=False)
 def stats():
+    """ Return the statistics of all class instances """
     statDict = {}
     from models import storage_t, storage
     if storage_t == "db":
@@ -26,19 +27,3 @@ def stats():
     for cls in classes.keys():
         statDict[cls] = storage.count(cls)
     return jsonify(statDict)
-
-
-@app_views.route("/stats", strict_slashes=False, methods=["GET"])
-def stats():
-    classes = {
-        "Amenity": Amenity,
-        "City": City,
-        "Place": Place,
-        "Review": Review,
-        "State": State,
-        "User": User,
-    }
-    return (
-        jsonify({k.lower(): storage.count(v) for k, v in classes.items()}),
-        200,
-    )
