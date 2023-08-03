@@ -13,12 +13,10 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def purge_session(req):
+    """ Closes session """
     storage.close()
 
 
 if __name__ == "__main__":
     from os import getenv
-
-    host = getenv("HNBN_API_HOST", "0.0.0.0")
-    port = getenv("HNBN_API_PORT", "5000")
-    app.run(host=host, port=port, threaded=True, debug=True)
+    app.run(host = getenv("HBNB_API_HOST", default="0.0.0.0") , port = getenv("HBNB_API_PORT", default="5000"), threaded=True)
