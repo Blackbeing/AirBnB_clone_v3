@@ -7,11 +7,11 @@ from api.v1.views import app_views
 from flask import jsonify
 
 
-@app_views.route("/status")
-@app_views.route("/status", strict_slashes=False, methods=["GET"])
+
+@app_views.route("/status", strict_slashes=False)
 def status():
     """Return a json object of dummy status code"""
-    return jsonify({"status": "OK"}), 200
+    return jsonify({"status": "OK"})
 
 
 @app_views.route("/stats", strict_slashes=False)
