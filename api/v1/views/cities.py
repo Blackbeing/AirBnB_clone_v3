@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 This module defines the RESTFul API endpoints for city objects
->>> curl -X GET http://0.0.0.0:5000/states/a8a3-475e-bf74-ab0a066ca2af/cities
+
 """
 from api.v1.views import app_views
 from models.city import City
