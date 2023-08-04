@@ -3,6 +3,7 @@
 This module defines a flask blueprint route
 Route returns json object
 """
+from flask import Flask
 from api.v1.views import app_views
 from flask import jsonify
 
