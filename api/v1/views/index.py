@@ -31,5 +31,5 @@ def stats():
     clsNames = ["amenities", "cities", "places", "reviews", "states", "users"]
     classes = [Amenity, City, Place, Review, State, User]
     for i in range(len(classes)):
-        statDict[clasNames[i]] = storage.count(classes[i])
+        statDict[clsNames[i]] = storage.count(classes[i])
     return jsonify(statDict)
