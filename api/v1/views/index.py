@@ -28,12 +28,8 @@ def status():
 def stats():
     """ Return the statistics of all class instances """
     statDict = {}
-    from models import storage_t, storage
-    if storage_t == "db":
-        from models.engine.db_storage import classes
-    else:
-        from models.engine.file_storage import classes
-
-    for cls in classes.keys():
-        statDict[cls] = storage.count(cls)
+    clsNames = ["amenities", "cities", "places", "reviews", "states", "users"]
+    classes = [Amenity, City, Place, Review, State, User]
+    for i in range(len(classes)):
+        statDict[clasNames[i]] = storage.count(classes[i])
     return jsonify(statDict)
