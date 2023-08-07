@@ -6,8 +6,6 @@ It serves at HBNB_API_HOST or 0.0.0.0, port HBNB_API_PORT or 5000
 from flask import Flask
 from models import storage
 from api.v1.views import app_views
-from flask_cors import CORS
-from flasgger import Swagger
 
 
 app = Flask(__name__)
@@ -20,16 +18,14 @@ def purge_session(req):
     storage.close()
 
 
-app.config['SWAGGER'] = {
-    'title': 'AirBnB clone - RESTful API',
-    'description': 'Airbnb clone restfull',
-    'uiversion': 3}
-
-Swagger(app)
-
 if __name__ == "__main__":
-    from os import getenv
+    from os import environ
 
-    host = getenv('HBNB_API_HOST', default='0.0.0.0')
-    port = getenv('HBNB_API_PORT', default=5000)
+    host = environ['HBNB_API_HOST']
+    if not host:
+        host = '0.0.0.0'
+
+    port = environ['HBNB_API_PORT']
+    if not port:
+        port = 5000
     app.run(host, int(port), threaded=True)
