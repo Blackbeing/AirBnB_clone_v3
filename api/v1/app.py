@@ -29,14 +29,6 @@ def notfound(err):
 
 if __name__ == "__main__":
 
-    try:
-        host = environ['HBNB_API_HOST']
-    except KeyError:
-        host = '0.0.0.0'
-
-    try:
-        port = environ['HBNB_API_PORT']
-    except KeyError:
-        port = 5000
-
-    app.run(host, int(port), threaded=True)
+    host = environ.get('HBNB_API_HOST', '0.0.0.0')
+    port = int(environ.get('HBNB_API_PORT', 5000))
+    app.run(host=host, port=port, debug=True, threaded=True)
